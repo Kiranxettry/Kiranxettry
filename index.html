@@ -185,15 +185,15 @@
       animation: fadeInPopup 0.5s ease-in forwards;
     }
 
-.popup-content {
-  width: 80%;
-  max-width: 720px;
-  aspect-ratio: 16 / 9;
-  background: url('freefire-popup-banner.jpg') no-repeat center/cover; /* एउटा मात्र background प्रयोग गर्नुहोस् */
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  animation: scaleIn 0.5s ease-in-out;
-}
+    .popup-content {
+      width: 80%;
+      max-width: 720px;
+      aspect-ratio: 16 / 9;
+      background: url('freefire-newyear-offer.jpg') no-repeat center/cover;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      animation: scaleIn 0.5s ease-in-out;
+    }
 
     @keyframes fadeInPopup {
       from { opacity: 0; }
@@ -274,7 +274,7 @@
         item.classList.remove('selected');
       });
       el.classList.add('selected');
-      selectedPackage = ;
+      selectedPackage = name;
     }
 
     function buy() {
